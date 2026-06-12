@@ -1,0 +1,86 @@
+---
+const contractTypes = [
+  { name: "Contract", desc: "Flexible coverage for peak seasons and surges." },
+  { name: "Contract-to-Hire", desc: "Try the fit before bringing talent on permanently." },
+  { name: "Full-Time", desc: "Dedicated crew members for steady operations." },
+  { name: "Part-Time", desc: "Right-sized hours for variable workloads." },
+  { name: "Permanent", desc: "Direct placement of long-term team members." },
+  { name: "Remote", desc: "Off-site coordination, dispatch, and support roles." },
+];
+
+const employers = [
+  "Pre-screened, work-ready candidates",
+  "Fill shifts in as little as 48 hours",
+  "Scale your crew up or down on demand",
+  "Compliance & background checks handled",
+];
+const workers = [
+  "Real warehouse jobs near you",
+  "Flexible shifts and contract types",
+  "Fair pay and a path to permanent roles",
+  "A team that has your back",
+];
+---
+
+<section id="roles" class="relative py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <!-- Contract types -->
+    <div class="mx-auto max-w-2xl text-center">
+      <p data-reveal class="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-gold">Engagement types</p>
+      <h2 data-reveal style="--reveal-delay:80ms" class="font-display text-3xl font-bold tracking-tight text-ink sm:text-[2.6rem] sm:leading-[1.1]">
+        Hire the way that fits your operation
+      </h2>
+    </div>
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {contractTypes.map((c, i) => (
+        <div data-reveal style={`--reveal-delay:${i * 70}ms`} class="group flex items-start gap-4 rounded-xl glass p-5 transition-colors hover:border-gold/35">
+          <span class="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-navy-600 ring-1 ring-[var(--color-line)]">
+            <svg class="h-4.5 w-4.5 text-gold" viewBox="0 0 16 16" fill="none"><path d="M3 8h9m0 0L8.5 4.5M12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div>
+            <h3 class="font-display text-base font-bold text-ink">{c.name}</h3>
+            <p class="mt-1 text-sm text-muted">{c.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Two audiences -->
+    <div class="mt-20 grid gap-5 lg:grid-cols-2">
+      <div data-reveal class="relative overflow-hidden rounded-2xl glass p-8">
+        <div class="glow right-[-3rem] top-[-3rem] h-40 w-40 bg-royal/25"></div>
+        <h3 class="font-display text-2xl font-bold text-ink">For Employers</h3>
+        <p class="mt-2 text-[15px] text-muted">Build a reliable crew without the hiring headache.</p>
+        <ul class="mt-6 space-y-3">
+          {employers.map((e) => (
+            <li class="flex items-center gap-3 text-[15px] text-ink">
+              <svg class="h-5 w-5 shrink-0 text-gold" viewBox="0 0 20 20" fill="none"><path d="m5 10.5 3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {e}
+            </li>
+          ))}
+        </ul>
+        <a href="#contact" class="mt-7 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-b from-gold-bright to-gold px-5 py-2.5 text-sm font-semibold text-navy transition-transform hover:-translate-y-0.5">
+          Request talent
+        </a>
+      </div>
+
+      <div data-reveal style="--reveal-delay:120ms" class="relative overflow-hidden rounded-2xl glass p-8">
+        <div class="glow left-[-3rem] top-[-3rem] h-40 w-40 bg-gold/12"></div>
+        <h3 class="font-display text-2xl font-bold text-ink">For Workers</h3>
+        <p class="mt-2 text-[15px] text-muted">Find work that respects your effort and grows with you.</p>
+        <ul class="mt-6 space-y-3">
+          {workers.map((w) => (
+            <li class="flex items-center gap-3 text-[15px] text-ink">
+              <svg class="h-5 w-5 shrink-0 text-gold" viewBox="0 0 20 20" fill="none"><path d="m5 10.5 3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {w}
+            </li>
+          ))}
+        </ul>
+        <a href="#contact" class="mt-7 inline-flex items-center gap-1.5 rounded-full glass px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-gold/40">
+          Apply now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

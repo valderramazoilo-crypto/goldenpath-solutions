@@ -1,0 +1,27 @@
+---
+// Placeholder wordmark for GoldenPath Solutions.
+// Swap the <svg> mark or the whole block for the official logo file when provided.
+interface Props {
+  class?: string;
+}
+const { class: cls = "" } = Astro.props;
+---
+
+<a href="#top" class={`group inline-flex items-center gap-3 ${cls}`} aria-label="GoldenPath Solutions — home">
+  <span class="relative grid h-9 w-9 place-items-center rounded-lg bg-navy-600 ring-1 ring-[var(--color-line)]">
+    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" aria-hidden="true">
+      <!-- "Golden path" chevron mark -->
+      <path d="M4 16.5 10 9l3.2 3.8L20 5" stroke="url(#gp)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="20" cy="5" r="2" fill="#e7cf9a" />
+      <defs>
+        <linearGradient id="gp" x1="4" y1="16" x2="20" y2="5" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#a87900" />
+          <stop offset="1" stop-color="#e7cf9a" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </span>
+  <span class="font-display text-[15px] font-bold tracking-tight text-ink">
+    GoldenPath<span class="ml-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-gold align-middle">Solutions</span>
+  </span>
+</a>

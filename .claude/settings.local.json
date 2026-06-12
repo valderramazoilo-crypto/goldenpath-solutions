@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip show *)",
+      "Bash(pdftotext -layout \"BRAND - GOLDENPAHT_compressed \\(1\\).pdf\" -)",
+      "Read(//c/Users/f_cv1/.claude/projects/C--Users-f-cv1-Documents-Paguinas-Wed-CLAUDE---Golden-Pack/memory/**)",
+      "Bash(cat MEMORY.md)",
+      "Bash(npm create *)",
+      "Read(//c/c/Users/f_cv1/Documents/Paguinas Wed/CLAUDE - Golden Pack/**)",
+      "Bash(npm pkg *)",
+      "Bash(npm install *)",
+      "Bash(xargs -0 sed -i -e s/font-800/font-extrabold/g -e s/font-700/font-bold/g -e s/font-600/font-semibold/g -e s/font-500/font-medium/g)",
+      "Bash(npm run *)",
+      "mcp__Claude_Preview__preview_start",
+      "PowerShell(winget install --id GitHub.cli --silent --accept-source-agreements --accept-package-agreements 2>&1)"
+    ]
+  }
+}

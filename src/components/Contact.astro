@@ -1,0 +1,67 @@
+---
+---
+
+<section id="contact" class="relative overflow-hidden py-24 sm:py-32">
+  <div class="glow left-1/2 top-1/2 h-80 w-[44rem] -translate-x-1/2 -translate-y-1/2 bg-royal/25"></div>
+  <div class="glow right-10 top-10 h-48 w-48 bg-gold/12"></div>
+
+  <div class="relative mx-auto max-w-5xl px-5 sm:px-8">
+    <div class="overflow-hidden rounded-3xl border border-[var(--color-line)] glass">
+      <div class="grid lg:grid-cols-2">
+        <!-- Left: pitch -->
+        <div class="relative p-8 sm:p-12">
+          <p data-reveal class="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-gold">Let's build your crew</p>
+          <h2 data-reveal style="--reveal-delay:80ms" class="font-display text-3xl font-bold leading-tight tracking-tight text-ink sm:text-4xl">
+            Ready to put the right people to work?
+          </h2>
+          <p data-reveal style="--reveal-delay:140ms" class="mt-4 text-[15px] leading-relaxed text-muted">
+            Tell us what you need and we'll get back within one business day.
+            Whether you're hiring a crew or looking for your next shift — this is the start of the golden path.
+          </p>
+
+          <ul class="mt-8 space-y-4 text-sm">
+            <li class="flex items-center gap-3 text-ink">
+              <svg class="h-5 w-5 text-gold" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h14v10H3z"/><path d="m3 6 7 5 7-5"/></svg>
+              hello@goldenpathsolutions.com
+            </li>
+            <li class="flex items-center gap-3 text-ink">
+              <svg class="h-5 w-5 text-gold" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h3l1.5 4-2 1.5a11 11 0 0 0 4 4l1.5-2 4 1.5V16a1 1 0 0 1-1 1A13 13 0 0 1 3 5a1 1 0 0 1 1-1Z" stroke-linejoin="round"/></svg>
+              (000) 000-0000
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right: form -->
+        <div class="border-t border-[var(--color-line)] bg-navy-700/40 p-8 sm:p-12 lg:border-l lg:border-t-0">
+          <form data-reveal style="--reveal-delay:120ms" class="space-y-4" onsubmit="event.preventDefault(); this.querySelector('[data-thanks]').classList.remove('hidden'); this.querySelector('button').disabled=true;">
+            <div class="grid gap-4 sm:grid-cols-2">
+              <label class="block">
+                <span class="mb-1.5 block text-xs font-medium text-muted">Full name</span>
+                <input type="text" required placeholder="Jane Doe" class="w-full rounded-lg border border-[var(--color-line)] bg-navy px-4 py-2.5 text-sm text-ink placeholder:text-faint focus:border-gold/50 focus:outline-none" />
+              </label>
+              <label class="block">
+                <span class="mb-1.5 block text-xs font-medium text-muted">Email</span>
+                <input type="email" required placeholder="you@company.com" class="w-full rounded-lg border border-[var(--color-line)] bg-navy px-4 py-2.5 text-sm text-ink placeholder:text-faint focus:border-gold/50 focus:outline-none" />
+              </label>
+            </div>
+            <label class="block">
+              <span class="mb-1.5 block text-xs font-medium text-muted">I am a…</span>
+              <select class="w-full rounded-lg border border-[var(--color-line)] bg-navy px-4 py-2.5 text-sm text-ink focus:border-gold/50 focus:outline-none">
+                <option>Employer — I want to hire</option>
+                <option>Worker — I'm looking for a job</option>
+              </select>
+            </label>
+            <label class="block">
+              <span class="mb-1.5 block text-xs font-medium text-muted">How can we help?</span>
+              <textarea rows="3" placeholder="Tell us about the roles or work you're after…" class="w-full resize-none rounded-lg border border-[var(--color-line)] bg-navy px-4 py-2.5 text-sm text-ink placeholder:text-faint focus:border-gold/50 focus:outline-none"></textarea>
+            </label>
+            <button type="submit" class="w-full rounded-full bg-gradient-to-b from-gold-bright to-gold px-6 py-3 text-sm font-semibold text-navy shadow-[0_12px_40px_-12px_rgba(200,169,107,0.7)] transition-transform hover:-translate-y-0.5 disabled:opacity-60">
+              Send message
+            </button>
+            <p data-thanks class="hidden text-center text-sm text-gold">Thanks — we'll be in touch within one business day.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

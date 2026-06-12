@@ -1,0 +1,52 @@
+---
+const services = [
+  {
+    title: "Workforce Staffing",
+    desc: "We find suitable candidates with the right skills and qualifications, matching the right person with the right job — handling the initial screening, interviewing, and background checks so both sides find a real fit.",
+    icon: `<path d="M16 17v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm13 9v-1a4 4 0 0 0-3-3.87M16 2.13A4 4 0 0 1 16 9.87" stroke-linecap="round" stroke-linejoin="round"/>`,
+  },
+  {
+    title: "Housekeeping & Facility",
+    desc: "Dependable cleaning and facility crews that keep your warehouse safe, compliant, and running. Trained, supervised, and ready for single shifts or long-term contracts.",
+    icon: `<path d="m16 3 5 5-9 9-5 1 1-5 8-10Zm-1 1 5 5M3 21h8" stroke-linecap="round" stroke-linejoin="round"/>`,
+  },
+  {
+    title: "Screening & Compliance",
+    desc: "Background checks, identity and eligibility verification, and safety onboarding built into every placement — so your team can move fast without taking on risk.",
+    icon: `<path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Zm-3 9.5 2.2 2.2L15.5 9" stroke-linecap="round" stroke-linejoin="round"/>`,
+  },
+];
+---
+
+<section id="services" class="relative py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <p data-reveal class="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-gold">What we do</p>
+      <h2 data-reveal style="--reveal-delay:80ms" class="font-display text-3xl font-bold tracking-tight text-ink sm:text-[2.6rem] sm:leading-[1.1]">
+        Staffing built around the people who do the work
+      </h2>
+      <p data-reveal style="--reveal-delay:140ms" class="mt-4 text-lg text-muted">
+        Three services, one promise: dependable people, placed fast, backed by real screening.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-5 md:grid-cols-3">
+      {services.map((s, i) => (
+        <article
+          data-reveal
+          style={`--reveal-delay:${i * 110}ms`}
+          class="group relative overflow-hidden rounded-2xl glass p-7 transition-all duration-500 hover:-translate-y-1 hover:border-gold/35"
+        >
+          <div class="glow right-[-3rem] top-[-3rem] h-32 w-32 bg-gold/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+          <div class="relative">
+            <span class="grid h-12 w-12 place-items-center rounded-xl bg-navy-600 ring-1 ring-[var(--color-line)]">
+              <svg viewBox="0 0 24 24" class="h-6 w-6 text-gold" fill="none" stroke="currentColor" stroke-width="1.6" set:html={s.icon} />
+            </span>
+            <h3 class="mt-5 font-display text-xl font-bold text-ink">{s.title}</h3>
+            <p class="mt-3 text-[15px] leading-relaxed text-muted">{s.desc}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

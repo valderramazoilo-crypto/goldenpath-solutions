@@ -1,0 +1,18 @@
+---
+// Placeholder client/partner names — swap for real logos when available.
+const partners = ["NorthBay Logistics", "Vertex Supply", "Cargo&Co", "Meridian Freight", "Atlas Distribution", "BlueDock", "Forge Warehousing"];
+const loop = [...partners, ...partners];
+---
+
+<section class="relative border-y border-[var(--color-line)] py-10">
+  <p data-reveal class="mb-7 text-center text-xs font-semibold uppercase tracking-[0.28em] text-faint">
+    Trusted by warehouse & logistics teams
+  </p>
+  <div class="marquee-mask overflow-hidden">
+    <div class="animate-marquee flex w-max items-center gap-12 whitespace-nowrap">
+      {loop.map((p) => (
+        <span class="font-display text-lg font-semibold text-muted/70 transition-colors hover:text-ink">{p}</span>
+      ))}
+    </div>
+  </div>
+</section>
