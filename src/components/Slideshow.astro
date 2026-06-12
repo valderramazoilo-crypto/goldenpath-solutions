@@ -1,0 +1,63 @@
+---
+// Crossfade + slow-zoom (Ken Burns) background slideshow.
+interface Props {
+  images: string[];
+  class?: string;
+  interval?: number;
+}
+const { images, class: cls = "", interval = 4800 } = Astro.props;
+---
+
+<div class={`kb-slideshow absolute inset-0 overflow-hidden ${cls}`} data-interval={interval} aria-hidden="true">
+  {images.map((src, i) => (
+    <div class={`kb-slide${i === 0 ? " active" : ""}`}>
+      <img src={src} alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async" />
+    </div>
+  ))}
+</div>
+
+<style>
+  .kb-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+  }
+  .kb-slide.active { opacity: 1; }
+  .kb-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.06);
+  }
+  .kb-slide.active img {
+    animation: kenburns 7s ease-out forwards;
+  }
+  @keyframes kenburns {
+    from { transform: scale(1.06); }
+    to { transform: scale(1.2); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .kb-slide { transition: none; }
+    .kb-slide.active img { animation: none; }
+  }
+</style>
+
+<script>
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll<HTMLElement>(".kb-slideshow").forEach((show) => {
+    const slides = Array.from(show.querySelectorAll<HTMLElement>(".kb-slide"));
+    if (slides.length < 2 || reduce) return;
+    const interval = parseInt(show.dataset.interval || "4800", 10);
+    let i = 0;
+    setInterval(() => {
+      slides[i].classList.remove("active");
+      i = (i + 1) % slides.length;
+      const next = slides[i];
+      // restart the Ken Burns animation
+      const img = next.querySelector("img");
+      if (img) { img.style.animation = "none"; void img.offsetWidth; img.style.animation = ""; }
+      next.classList.add("active");
+    }, interval);
+  });
+</script>

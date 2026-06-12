@@ -1,9 +1,9 @@
 ---
 const kpis = [
-  { label: "Fill rate", value: "98.6", suffix: "%" },
-  { label: "Avg. time to fill", value: "48", suffix: "h" },
-  { label: "90-day retention", value: "92", suffix: "%" },
-  { label: "Active workforce", value: "12", suffix: "K+" },
+  { label: "Workers placed", value: "500", suffix: "+" },
+  { label: "Coverage", value: "24", suffix: "/7" },
+  { label: "Satisfied clients", value: "15", suffix: "+" },
+  { label: "Worker satisfaction", value: "4.9", suffix: "/5" },
 ];
 ---
 
@@ -39,7 +39,7 @@ const kpis = [
           <h3 class="font-heading text-white text-2xl tracking-[-0.5px]">Operational performance</h3>
           <span class="text-xs text-white/55 font-body">Last 8 months</span>
         </div>
-        <p class="sr-only">Line chart: average time-to-fill fell from 96 to 41 hours while fill rate rose from 89% to 99% over eight months.</p>
+        <p class="sr-only">Line chart: average time-to-fill fell from 40 to 12 hours while fill rate rose from 89% to 99% over eight months.</p>
         <div class="mt-5 h-[300px]"><canvas id="chart-trend" aria-label="Operational performance trend chart" role="img"></canvas></div>
       </div>
 
@@ -54,7 +54,7 @@ const kpis = [
           <h3 class="font-heading text-white text-2xl tracking-[-0.5px]">Monthly placements</h3>
           <span class="text-xs text-white/55 font-body">Workers placed per month</span>
         </div>
-        <p class="sr-only">Bar chart of workers placed each month, climbing from about 640 to 1,420.</p>
+        <p class="sr-only">Bar chart of workers placed each month, climbing from about 30 to 92.</p>
         <div class="mt-5 h-[260px]"><canvas id="chart-placements" aria-label="Monthly placements chart" role="img"></canvas></div>
       </div>
     </div>
@@ -102,7 +102,7 @@ const kpis = [
           datasets: [
             {
               label: "Time to fill (hrs)",
-              data: [96, 88, 79, 70, 63, 55, 47, 41],
+              data: [40, 34, 29, 24, 20, 17, 14, 12],
               borderColor: GOLD_BRIGHT,
               backgroundColor: gradient(ctx, "rgba(200,169,107,0.28)", "rgba(200,169,107,0)"),
               borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0, pointHoverRadius: 5,
@@ -166,7 +166,7 @@ const kpis = [
           labels: months,
           datasets: [{
             label: "Workers placed",
-            data: [640, 720, 810, 880, 1010, 1180, 1310, 1420],
+            data: [30, 38, 45, 52, 61, 70, 82, 92],
             backgroundColor: gradient(ctx, GOLD_BRIGHT, "rgba(168,121,0,0.35)"),
             borderRadius: 8, borderSkipped: false, maxBarThickness: 46,
           }],
@@ -179,7 +179,7 @@ const kpis = [
           },
           scales: {
             x: { grid: { display: false }, border: { display: false } },
-            y: { grid: { color: GRID }, border: { display: false }, ticks: { stepSize: 400 } },
+            y: { grid: { color: GRID }, border: { display: false }, ticks: { stepSize: 25 } },
           },
         },
       });
