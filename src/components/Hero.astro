@@ -4,7 +4,7 @@ import Nav from "./Nav.astro";
 const partners = ["Northbay", "Vertex", "Meridian", "Atlas", "Forge"];
 ---
 
-<section id="top" class="relative min-h-screen overflow-hidden flex flex-col bg-black">
+<section id="top" class="relative min-h-screen overflow-hidden flex flex-col bg-navy-900">
   <!-- Full-bleed background video -->
   <video
     data-fade
@@ -20,7 +20,7 @@ const partners = ["Northbay", "Vertex", "Meridian", "Atlas", "Forge"];
     <source src="/img/band.mp4" type="video/mp4" />
   </video>
   <!-- Minimal legibility veil (keeps it cinematic) -->
-  <div class="absolute inset-0 z-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80"></div>
+  <div class="absolute inset-0 z-0 bg-gradient-to-b from-navy-900/40 via-navy-900/20 to-navy-900/80"></div>
   <div class="absolute inset-0 z-0 bg-[radial-gradient(60%_50%_at_50%_55%,rgba(0,0,0,0.45),transparent)]"></div>
 
   <div class="relative z-10 flex min-h-screen flex-col">
@@ -51,7 +51,7 @@ const partners = ["Northbay", "Vertex", "Meridian", "Atlas", "Forge"];
 
       <!-- CTAs -->
       <div data-reveal style="--reveal-delay:900ms" class="mt-7 flex items-center gap-6">
-        <a href="#contact" class="liquid-glass-strong inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-white">
+        <a href="/hire" class="liquid-glass-strong inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-white">
           Start Hiring
           <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
         </a>

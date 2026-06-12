@@ -1,10 +1,10 @@
 ---
 const links = [
-  { label: "Home", href: "#top" },
-  { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
-  { label: "Roles", href: "#roles" },
-  { label: "Contact", href: "#contact" },
+  { label: "Industries", href: "/#industries" },
+  { label: "Services", href: "/#services" },
+  { label: "Results", href: "/#results" },
+  { label: "Roles", href: "/#roles" },
+  { label: "FAQ", href: "/#faq" },
 ];
 ---
 
@@ -22,14 +22,14 @@ const links = [
           {l.label}
         </a>
       ))}
-      <a href="#contact" class="ml-1 inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-white px-4 py-2 text-sm font-medium text-black hover:bg-white/90 transition-colors">
+      <a href="/hire" class="ml-1 inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-white px-4 py-2 text-sm font-medium text-navy hover:bg-white/90 transition-colors">
         Hire Talent
         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
       </a>
     </div>
 
     <!-- Right: For Workers (desktop) / burger (mobile) -->
-    <a href="#contact" class="hidden lg:inline-block text-sm font-medium text-white/80 hover:text-white transition-colors font-body">
+    <a href="/#contact" class="hidden lg:inline-block text-sm font-medium text-white/80 hover:text-white transition-colors font-body">
       For Workers
     </a>
 
@@ -44,7 +44,7 @@ const links = [
       {links.map((l) => (
         <a href={l.href} class="px-4 py-3 text-base font-medium text-white/90 rounded-full hover:bg-white/5">{l.label}</a>
       ))}
-      <a href="#contact" class="mt-1 inline-flex items-center justify-center gap-1.5 rounded-full bg-white px-5 py-3 text-sm font-medium text-black">
+      <a href="/hire" class="mt-1 inline-flex items-center justify-center gap-1.5 rounded-full bg-white px-5 py-3 text-sm font-medium text-navy">
         Hire Talent
         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
       </a>

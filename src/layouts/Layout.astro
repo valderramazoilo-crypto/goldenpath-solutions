@@ -8,7 +8,7 @@ interface Props {
 
 const {
   title = "GoldenPath Solutions — Warehouse Staffing & Recruitment",
-  description = "GoldenPath Solutions connects warehouses and logistics teams with reliable, vetted workers. The golden path from hard work to real opportunity.",
+  description = "GoldenPath Solutions connects warehouses and logistics teams with reliable, pre-screened workers. The golden path from hard work to real opportunity.",
 } = Astro.props;
 ---
 
@@ -25,12 +25,13 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#0f172a" />
 
+    <!-- Hanken Grotesk is the live fallback until self-hosted Degular loads -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -45,8 +46,72 @@ const {
     <slot />
 
     <script>
+      import Lenis from "lenis";
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
       // ---------------------------------------------------------
-      // Word-by-word blur-in headline (BlurText equivalent)
+      // Lenis smooth scroll
+      // ---------------------------------------------------------
+      let lenis: any = null;
+      if (!reduceMotion) {
+        lenis = new Lenis({
+          duration: 1.15,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+          touchMultiplier: 1.6,
+        });
+        const raf = (time: number) => {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        };
+        requestAnimationFrame(raf);
+
+        // Smooth in-page anchor navigation (handles "#id" and "/#id")
+        document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]').forEach((a) => {
+          a.addEventListener("click", (e) => {
+            const href = a.getAttribute("href") || "";
+            const hashIndex = href.indexOf("#");
+            if (hashIndex < 0) return;
+            const path = href.slice(0, hashIndex);
+            const hash = href.slice(hashIndex);
+            if (hash === "#" || (path && path !== window.location.pathname && path !== "/")) return;
+            const target = document.querySelector(hash);
+            if (target) {
+              e.preventDefault();
+              history.replaceState(null, "", hash);
+              lenis.scrollTo(target as HTMLElement, { offset: -80 });
+            }
+          });
+        });
+      }
+
+      // ---------------------------------------------------------
+      // Scroll progress + parallax (driven by Lenis or native scroll)
+      // ---------------------------------------------------------
+      const bar = document.getElementById("scroll-progress");
+      const parallaxEls = Array.from(document.querySelectorAll<HTMLElement>("[data-parallax]"));
+      const onScroll = () => {
+        const h = document.documentElement;
+        const max = h.scrollHeight - h.clientHeight;
+        const p = max > 0 ? h.scrollTop / max : 0;
+        if (bar) bar.style.transform = `scaleX(${p})`;
+        if (!reduceMotion) {
+          const vh = window.innerHeight;
+          for (const el of parallaxEls) {
+            const speed = parseFloat(el.dataset.parallax || "0.15");
+            const rect = el.getBoundingClientRect();
+            const offset = (rect.top + rect.height / 2 - vh / 2) * -speed;
+            el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`;
+          }
+        }
+      };
+      if (lenis) lenis.on("scroll", onScroll);
+      document.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      // ---------------------------------------------------------
+      // Word-by-word blur-in headline
       // ---------------------------------------------------------
       function initBlurText() {
         document.querySelectorAll<HTMLElement>("[data-blur-text]").forEach((el) => {
@@ -61,20 +126,20 @@ const {
             el.appendChild(span);
           });
         });
-
         const io = new IntersectionObserver(
           (entries) => {
             for (const entry of entries) {
               if (!entry.isIntersecting) continue;
               const words = entry.target.querySelectorAll<HTMLElement>(".word");
               words.forEach((word, i) => {
+                if (reduceMotion) { word.style.opacity = "1"; word.style.filter = "none"; word.style.transform = "none"; return; }
                 word.animate(
                   [
-                    { filter: "blur(10px)", opacity: 0, transform: "translateY(50px)" },
-                    { filter: "blur(5px)", opacity: 0.5, transform: "translateY(-5px)" },
+                    { filter: "blur(10px)", opacity: 0, transform: "translateY(46px)" },
+                    { filter: "blur(4px)", opacity: 0.6, transform: "translateY(-4px)" },
                     { filter: "blur(0px)", opacity: 1, transform: "translateY(0)" },
                   ],
-                  { duration: 700, delay: i * 100, easing: "ease-out", fill: "forwards" }
+                  { duration: 750, delay: i * 90, easing: "cubic-bezier(0.22,1,0.36,1)", fill: "forwards" }
                 );
               });
               io.unobserve(entry.target);
@@ -86,58 +151,7 @@ const {
       }
 
       // ---------------------------------------------------------
-      // FadingVideo — manual loop with rAF crossfade at the seam
-      // ---------------------------------------------------------
-      function initFadingVideos() {
-        const FADE_MS = 500;
-        const FADE_OUT_LEAD = 0.55;
-        document.querySelectorAll<HTMLVideoElement>("video[data-fade]").forEach((video) => {
-          let raf = 0;
-          let fadingOut = false;
-          const fadeTo = (target: number, duration: number) => {
-            cancelAnimationFrame(raf);
-            const start = parseFloat(video.style.opacity || "0");
-            const t0 = performance.now();
-            const step = (now: number) => {
-              const t = Math.min((now - t0) / duration, 1);
-              video.style.opacity = String(start + (target - start) * t);
-              if (t < 1) raf = requestAnimationFrame(step);
-            };
-            raf = requestAnimationFrame(step);
-          };
-          video.style.opacity = "0";
-          video.addEventListener("loadeddata", () => {
-            video.style.opacity = "0";
-            video.play().catch(() => {});
-            fadeTo(1, FADE_MS);
-          });
-          video.addEventListener("timeupdate", () => {
-            if (fadingOut || !video.duration) return;
-            const remaining = video.duration - video.currentTime;
-            if (remaining <= FADE_OUT_LEAD && remaining > 0) {
-              fadingOut = true;
-              fadeTo(0, FADE_MS);
-            }
-          });
-          video.addEventListener("ended", () => {
-            video.style.opacity = "0";
-            setTimeout(() => {
-              video.currentTime = 0;
-              video.play().catch(() => {});
-              fadingOut = false;
-              fadeTo(1, FADE_MS);
-            }, 100);
-          });
-          // kick if already loaded
-          if (video.readyState >= 2) {
-            video.play().catch(() => {});
-            fadeTo(1, FADE_MS);
-          }
-        });
-      }
-
-      // ---------------------------------------------------------
-      // Reveal on scroll (blur-in)
+      // Reveal on scroll (with optional stagger groups)
       // ---------------------------------------------------------
       function initReveal() {
         const io = new IntersectionObserver(
@@ -155,7 +169,7 @@ const {
       }
 
       // ---------------------------------------------------------
-      // Animated stat counters
+      // Animated counters
       // ---------------------------------------------------------
       function initCounters() {
         const io = new IntersectionObserver(
@@ -165,12 +179,14 @@ const {
               const el = entry.target as HTMLElement;
               const target = parseFloat(el.dataset.count || "0");
               const suffix = el.dataset.suffix || "";
+              const prefix = el.dataset.prefix || "";
               const decimals = (el.dataset.count || "").includes(".") ? 1 : 0;
+              if (reduceMotion) { el.textContent = prefix + target.toFixed(decimals) + suffix; io.unobserve(el); continue; }
               const t0 = performance.now();
               const tick = (now: number) => {
-                const t = Math.min((now - t0) / 1600, 1);
+                const t = Math.min((now - t0) / 1700, 1);
                 const eased = 1 - Math.pow(1 - t, 3);
-                el.textContent = (target * eased).toFixed(decimals) + suffix;
+                el.textContent = prefix + (target * eased).toFixed(decimals) + suffix;
                 if (t < 1) requestAnimationFrame(tick);
               };
               requestAnimationFrame(tick);
@@ -183,19 +199,44 @@ const {
       }
 
       // ---------------------------------------------------------
-      // Scroll progress + sticky nav + mobile menu
+      // FadingVideo — manual loop with rAF crossfade at the seam
       // ---------------------------------------------------------
-      function initChrome() {
-        const bar = document.getElementById("scroll-progress");
-        const onScroll = () => {
-          const h = document.documentElement;
-          const max = h.scrollHeight - h.clientHeight;
-          const p = max > 0 ? h.scrollTop / max : 0;
-          if (bar) bar.style.transform = `scaleX(${p})`;
-        };
-        document.addEventListener("scroll", onScroll, { passive: true });
-        onScroll();
+      function initFadingVideos() {
+        const FADE_MS = 500;
+        const FADE_OUT_LEAD = 0.55;
+        document.querySelectorAll<HTMLVideoElement>("video[data-fade]").forEach((video) => {
+          let rafId = 0;
+          let fadingOut = false;
+          const fadeTo = (target: number, duration: number) => {
+            cancelAnimationFrame(rafId);
+            const start = parseFloat(video.style.opacity || "0");
+            const t0 = performance.now();
+            const step = (now: number) => {
+              const t = Math.min((now - t0) / duration, 1);
+              video.style.opacity = String(start + (target - start) * t);
+              if (t < 1) rafId = requestAnimationFrame(step);
+            };
+            rafId = requestAnimationFrame(step);
+          };
+          video.style.opacity = "0";
+          video.addEventListener("loadeddata", () => { video.style.opacity = "0"; video.play().catch(() => {}); fadeTo(1, FADE_MS); });
+          video.addEventListener("timeupdate", () => {
+            if (fadingOut || !video.duration) return;
+            const remaining = video.duration - video.currentTime;
+            if (remaining <= FADE_OUT_LEAD && remaining > 0) { fadingOut = true; fadeTo(0, FADE_MS); }
+          });
+          video.addEventListener("ended", () => {
+            video.style.opacity = "0";
+            setTimeout(() => { video.currentTime = 0; video.play().catch(() => {}); fadingOut = false; fadeTo(1, FADE_MS); }, 100);
+          });
+          if (video.readyState >= 2) { video.play().catch(() => {}); fadeTo(1, FADE_MS); }
+        });
+      }
 
+      // ---------------------------------------------------------
+      // Mobile menu
+      // ---------------------------------------------------------
+      function initMenu() {
         const burger = document.getElementById("burger");
         const mobileMenu = document.getElementById("mobile-menu");
         burger?.addEventListener("click", () => mobileMenu?.classList.toggle("hidden"));
@@ -205,10 +246,10 @@ const {
       }
 
       initBlurText();
-      initFadingVideos();
       initReveal();
       initCounters();
-      initChrome();
+      initFadingVideos();
+      initMenu();
     </script>
   </body>
 </html>

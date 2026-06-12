@@ -1,0 +1,47 @@
+---
+const quotes = [
+  {
+    quote: "GoldenPath filled 40 freezer roles in a week when no one else could. Their crews show up, work safe, and stay.",
+    name: "Marcus Bell",
+    role: "Operations Director, Cold-chain 3PL",
+  },
+  {
+    quote: "The screening is the difference. We stopped losing days to no-shows and bad fits — the people they send are ready.",
+    name: "Dana Whitfield",
+    role: "DC Manager, E-commerce Fulfillment",
+  },
+  {
+    quote: "One partner, four sites, far less turnover. GoldenPath made our labor predictable for the first time in years.",
+    name: "Priya Nair",
+    role: "VP Supply Chain, Retail Distribution",
+  },
+];
+---
+
+<section id="testimonials" class="relative bg-navy-900 py-24 sm:py-32 overflow-hidden">
+  <div class="glow right-[-8rem] top-10 h-80 w-80 bg-royal/12"></div>
+  <div class="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 md:px-16 lg:px-20">
+    <div class="max-w-2xl">
+      <p data-reveal class="text-sm font-body text-white/70 mb-5">// What clients say</p>
+      <h2 data-reveal style="--reveal-delay:80ms" class="font-heading text-white text-5xl md:text-6xl lg:text-[4.5rem] leading-[0.92] tracking-[-2px]">
+        Trusted on the <span class="text-gold-gradient">floor</span>
+      </h2>
+    </div>
+
+    <div class="mt-14 grid gap-6 md:grid-cols-3">
+      {quotes.map((q, i) => (
+        <figure data-reveal style={`--reveal-delay:${i * 110}ms`} class="liquid-glass rounded-[1.5rem] p-7 flex flex-col">
+          <svg class="h-8 w-8 text-gold/70" viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 7C6.5 7 5 9.5 5 12v5h5v-5H7.5c0-1.5.8-3 2-3V7Zm9 0c-3 0-4.5 2.5-4.5 5v5h5v-5H16.5c0-1.5.8-3 2-3V7Z"/></svg>
+          <blockquote class="mt-5 flex-1 text-[15px] text-white/85 font-body font-light leading-relaxed">“{q.quote}”</blockquote>
+          <figcaption class="mt-6 flex items-center gap-3">
+            <span class="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-gold-bright to-amber font-heading text-navy text-sm">{q.name.split(' ').map((n) => n[0]).join('')}</span>
+            <span>
+              <span class="block text-sm font-medium text-white font-body">{q.name}</span>
+              <span class="block text-xs text-white/55 font-body">{q.role}</span>
+            </span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

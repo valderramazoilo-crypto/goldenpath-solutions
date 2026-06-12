@@ -1,0 +1,57 @@
+---
+const cases = [
+  {
+    tag: "E-commerce · Peak season",
+    title: "Cleared a 3× order surge without missing an SLA",
+    body: "A national fulfillment client faced Black Friday volume with a 40% labor gap. GoldenPath stood up a vetted crew of 280 in under two weeks.",
+    metrics: [
+      { k: "Roles filled", before: "60%", after: "100%" },
+      { k: "Time to fill", before: "9 days", after: "48 hrs" },
+      { k: "Order accuracy", before: "96.1%", after: "99.4%" },
+    ],
+  },
+  {
+    tag: "3PL · Multi-site",
+    title: "Cut agency spend 22% across four distribution centers",
+    body: "By consolidating staffing under one accountable partner, a 3PL operator stabilized headcount and slashed turnover across all sites.",
+    metrics: [
+      { k: "Annual savings", before: "—", after: "$1.4M" },
+      { k: "90-day retention", before: "71%", after: "92%" },
+      { k: "Fill rate", before: "84%", after: "98.6%" },
+    ],
+  },
+];
+---
+
+<section id="results" class="relative bg-navy-900 py-24 sm:py-32 overflow-hidden">
+  <div class="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 md:px-16 lg:px-20">
+    <div class="max-w-2xl">
+      <p data-reveal class="text-sm font-body text-white/70 mb-5">// Proven results</p>
+      <h2 data-reveal style="--reveal-delay:80ms" class="font-heading text-white text-5xl md:text-6xl lg:text-[4.5rem] leading-[0.92] tracking-[-2px]">
+        Outcomes, not <span class="text-gold-gradient">promises</span>
+      </h2>
+    </div>
+
+    <div class="mt-14 grid gap-6 lg:grid-cols-2">
+      {cases.map((c, i) => (
+        <article data-reveal style={`--reveal-delay:${i * 120}ms`} class="liquid-glass-strong rounded-[1.75rem] p-8 sm:p-10 flex flex-col">
+          <span class="inline-flex w-fit liquid-glass rounded-full px-3.5 py-1 text-[11px] font-medium text-gold font-body uppercase tracking-wider">{c.tag}</span>
+          <h3 class="mt-5 font-heading text-white text-2xl md:text-3xl tracking-[-0.5px] leading-tight">{c.title}</h3>
+          <p class="mt-4 text-[15px] text-white/75 font-body font-light leading-relaxed">{c.body}</p>
+
+          <div class="mt-8 grid grid-cols-3 gap-3">
+            {c.metrics.map((m) => (
+              <div class="liquid-glass rounded-[1rem] p-4">
+                <p class="text-[11px] text-white/55 font-body">{m.k}</p>
+                <p class="mt-2 flex items-baseline gap-1.5">
+                  <span class="text-xs text-white/40 line-through font-body">{m.before}</span>
+                </p>
+                <p class="font-heading text-2xl text-gold-gradient leading-none mt-0.5">{m.after}</p>
+              </div>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

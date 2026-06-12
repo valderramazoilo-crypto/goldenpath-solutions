@@ -1,0 +1,268 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const operations = [
+  { id: "ecommerce", label: "E-commerce Fulfillment", icon: `<path d="M3 9h18M3 9l1.5-5h15L21 9M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M9 13h6"/>` },
+  { id: "manufacturing", label: "Manufacturing & Assembly", icon: `<path d="M3 21V8l6 4V8l6 4V5l6 3v13H3Z"/>` },
+  { id: "cold", label: "Cold Storage & Food", icon: `<path d="M12 2v20M4 6l16 12M20 6 4 18M12 2l3 3-3 3-3-3 3-3Z"/>` },
+  { id: "3pl", label: "3PL & Distribution", icon: `<path d="M1 3h15v13H1zM16 8h4l3 3v5h-7M5.5 19a2 2 0 1 0 .001-3.999A2 2 0 0 0 5.5 19Zm13 0a2 2 0 1 0 .001-3.999A2 2 0 0 0 18.5 19Z"/>` },
+  { id: "retail", label: "Retail Distribution", icon: `<path d="M4 4h16l-1.5 6.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 4Zm2 16a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm12 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/>` },
+];
+
+const roles = ["Pickers & Packers", "Forklift Operators", "Loaders / Unloaders", "Assembly", "Material Handlers", "Inventory / Cycle Count", "Housekeeping", "Shift Supervisors"];
+const shifts = ["1st (Day)", "2nd (Swing)", "3rd (Overnight)", "Weekends"];
+const engagements = [
+  { id: "contract", label: "Contract", desc: "Flexible, peak coverage" },
+  { id: "c2h", label: "Contract-to-Hire", desc: "Try before you hire" },
+  { id: "fulltime", label: "Full-Time", desc: "Steady, dedicated crew" },
+  { id: "permanent", label: "Permanent", desc: "Direct placement" },
+];
+---
+
+<Layout title="Hire Talent — GoldenPath Solutions" description="Tell us what your warehouse needs and we'll build the right crew. Start your staffing request with GoldenPath Solutions.">
+  <div class="relative min-h-dvh bg-navy-900 overflow-hidden">
+    <div class="glow left-1/2 top-[-6rem] h-[26rem] w-[40rem] -translate-x-1/2 bg-royal/20"></div>
+    <div class="glow right-[-8rem] top-40 h-80 w-80 bg-gold/12"></div>
+    <div class="absolute inset-0 bg-grid opacity-50 [mask-image:radial-gradient(70%_50%_at_50%_0%,#000,transparent)]"></div>
+
+    <!-- Top bar -->
+    <header class="relative z-10 mx-auto max-w-5xl px-5 sm:px-8 flex items-center justify-between py-5">
+      <a href="/" class="flex items-center" aria-label="GoldenPath Solutions — home">
+        <img src="/logo/goldenpath-light.png" alt="GoldenPath Solutions" width="916" height="193" class="h-7 w-auto sm:h-8" />
+      </a>
+      <a href="/" class="inline-flex items-center gap-1.5 text-sm font-medium text-white/70 hover:text-white transition-colors font-body">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M5 12l6-6M5 12l6 6"/></svg>
+        Back to site
+      </a>
+    </header>
+
+    <main class="relative z-10 mx-auto max-w-3xl px-5 sm:px-8 pb-24 pt-6">
+      <div class="text-center max-w-2xl mx-auto">
+        <span data-reveal class="inline-flex liquid-glass rounded-full px-3.5 py-1 text-xs font-medium text-gold font-body">Staffing request · ~2 min</span>
+        <h1 data-reveal style="--reveal-delay:80ms" class="mt-5 font-heading text-white text-4xl md:text-6xl tracking-[-2px] leading-[0.95]">
+          Let's build your <span class="text-gold-gradient">crew</span>
+        </h1>
+        <p data-reveal style="--reveal-delay:140ms" class="mt-4 text-base text-white/75 font-body font-light">
+          Five quick steps. We'll reply with a tailored staffing plan within one business day.
+        </p>
+      </div>
+
+      <!-- Progress -->
+      <div data-reveal class="mt-10 flex items-center gap-3">
+        <div class="flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden">
+          <div id="progress-fill" class="h-full rounded-full bg-gradient-to-r from-amber via-gold to-gold-bright transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" style="width:20%"></div>
+        </div>
+        <span id="progress-label" class="text-xs font-medium text-white/60 font-body whitespace-nowrap">Step 1 of 5</span>
+      </div>
+
+      <!-- Form -->
+      <form id="hire-form" data-reveal style="--reveal-delay:120ms" class="mt-6 liquid-glass-strong rounded-[1.75rem] p-6 sm:p-9">
+
+        <!-- Step 1: Operation -->
+        <section class="hire-step" data-step="1">
+          <h2 class="font-heading text-white text-2xl tracking-[-0.5px]">What kind of operation?</h2>
+          <p class="mt-1.5 text-sm text-white/60 font-body">Pick the closest match.</p>
+          <div class="mt-6 grid sm:grid-cols-2 gap-3">
+            {operations.map((o, i) => (
+              <label class="group cursor-pointer">
+                <input type="radio" name="operation" value={o.label} class="peer sr-only" required checked={i === 0} />
+                <div class="liquid-glass rounded-[1rem] p-4 flex items-center gap-3 transition-all peer-checked:ring-2 peer-checked:ring-gold peer-checked:bg-gold/10">
+                  <span class="grid h-10 w-10 shrink-0 place-items-center rounded-[0.7rem] liquid-glass text-gold">
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={o.icon} />
+                  </span>
+                  <span class="text-sm font-medium text-white font-body">{o.label}</span>
+                </div>
+              </label>
+            ))}
+          </div>
+        </section>
+
+        <!-- Step 2: Roles -->
+        <section class="hire-step hidden" data-step="2">
+          <h2 class="font-heading text-white text-2xl tracking-[-0.5px]">Which roles do you need?</h2>
+          <p class="mt-1.5 text-sm text-white/60 font-body">Select all that apply.</p>
+          <div class="mt-6 flex flex-wrap gap-2.5">
+            {roles.map((r) => (
+              <label class="cursor-pointer">
+                <input type="checkbox" name="roles" value={r} class="peer sr-only" />
+                <span class="inline-block liquid-glass rounded-full px-4 py-2.5 text-sm font-medium text-white/80 font-body transition-all peer-checked:bg-gradient-to-b peer-checked:from-gold-bright peer-checked:to-gold peer-checked:text-navy">{r}</span>
+              </label>
+            ))}
+          </div>
+          <p data-error="roles" class="hidden mt-4 text-sm text-gold font-body">Please select at least one role.</p>
+        </section>
+
+        <!-- Step 3: Volume & shifts -->
+        <section class="hire-step hidden" data-step="3">
+          <h2 class="font-heading text-white text-2xl tracking-[-0.5px]">Volume &amp; schedule</h2>
+          <p class="mt-1.5 text-sm text-white/60 font-body">Roughly how many people, and when.</p>
+          <div class="mt-6 grid sm:grid-cols-2 gap-5">
+            <label class="block">
+              <span class="mb-2 block text-xs font-medium text-white/70 font-body">Number of workers</span>
+              <input type="number" name="workers" min="1" value="25" required class="w-full rounded-full liquid-glass px-4 py-3 text-sm text-white focus:outline-none" />
+            </label>
+            <label class="block">
+              <span class="mb-2 block text-xs font-medium text-white/70 font-body">Ideal start date</span>
+              <input type="date" name="start" class="w-full rounded-full liquid-glass px-4 py-3 text-sm text-white focus:outline-none [color-scheme:dark]" />
+            </label>
+          </div>
+          <p class="mt-6 mb-2 text-xs font-medium text-white/70 font-body">Shifts to cover</p>
+          <div class="flex flex-wrap gap-2.5">
+            {shifts.map((s) => (
+              <label class="cursor-pointer">
+                <input type="checkbox" name="shifts" value={s} class="peer sr-only" />
+                <span class="inline-block liquid-glass rounded-full px-4 py-2.5 text-sm font-medium text-white/80 font-body transition-all peer-checked:bg-gradient-to-b peer-checked:from-gold-bright peer-checked:to-gold peer-checked:text-navy">{s}</span>
+              </label>
+            ))}
+          </div>
+          <p data-error="shifts" class="hidden mt-4 text-sm text-gold font-body">Please select at least one shift.</p>
+        </section>
+
+        <!-- Step 4: Engagement -->
+        <section class="hire-step hidden" data-step="4">
+          <h2 class="font-heading text-white text-2xl tracking-[-0.5px]">Engagement type</h2>
+          <p class="mt-1.5 text-sm text-white/60 font-body">How do you want to engage the crew?</p>
+          <div class="mt-6 grid sm:grid-cols-2 gap-3">
+            {engagements.map((e, i) => (
+              <label class="cursor-pointer">
+                <input type="radio" name="engagement" value={e.label} class="peer sr-only" required checked={i === 0} />
+                <div class="liquid-glass rounded-[1rem] p-5 transition-all peer-checked:ring-2 peer-checked:ring-gold peer-checked:bg-gold/10">
+                  <p class="font-heading text-white text-lg tracking-[-0.3px]">{e.label}</p>
+                  <p class="mt-1 text-xs text-white/60 font-body">{e.desc}</p>
+                </div>
+              </label>
+            ))}
+          </div>
+        </section>
+
+        <!-- Step 5: Contact + summary -->
+        <section class="hire-step hidden" data-step="5">
+          <h2 class="font-heading text-white text-2xl tracking-[-0.5px]">Where do we send your plan?</h2>
+          <div id="summary" class="mt-5 liquid-glass rounded-[1rem] p-4 text-sm text-white/75 font-body font-light leading-relaxed"></div>
+          <div class="mt-5 grid sm:grid-cols-2 gap-4">
+            <label class="block">
+              <span class="mb-2 block text-xs font-medium text-white/70 font-body">Full name *</span>
+              <input type="text" name="name" required placeholder="Jane Doe" class="w-full rounded-full liquid-glass px-4 py-3 text-sm text-white placeholder:text-white/40 focus:outline-none" />
+            </label>
+            <label class="block">
+              <span class="mb-2 block text-xs font-medium text-white/70 font-body">Company *</span>
+              <input type="text" name="company" required placeholder="Acme Logistics" class="w-full rounded-full liquid-glass px-4 py-3 text-sm text-white placeholder:text-white/40 focus:outline-none" />
+            </label>
+            <label class="block">
+              <span class="mb-2 block text-xs font-medium text-white/70 font-body">Work email *</span>
+              <input type="email" name="email" required placeholder="you@company.com" class="w-full rounded-full liquid-glass px-4 py-3 text-sm text-white placeholder:text-white/40 focus:outline-none" />
+            </label>
+            <label class="block">
+              <span class="mb-2 block text-xs font-medium text-white/70 font-body">Phone</span>
+              <input type="tel" name="phone" placeholder="(000) 000-0000" class="w-full rounded-full liquid-glass px-4 py-3 text-sm text-white placeholder:text-white/40 focus:outline-none" />
+            </label>
+          </div>
+        </section>
+
+        <!-- Success -->
+        <section id="hire-success" class="hidden text-center py-8">
+          <span class="mx-auto grid h-16 w-16 place-items-center rounded-full bg-gradient-to-b from-gold-bright to-gold text-navy">
+            <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+          </span>
+          <h2 class="mt-6 font-heading text-white text-3xl tracking-[-1px]">Request received</h2>
+          <p class="mt-3 text-white/75 font-body font-light max-w-md mx-auto">Thanks — our team will reply within one business day with a tailored staffing plan. The golden path starts here.</p>
+          <a href="/" class="mt-8 inline-flex items-center gap-1.5 rounded-full bg-white px-6 py-3 text-sm font-medium text-navy hover:bg-white/90 transition-colors">Back to home</a>
+        </section>
+
+        <!-- Nav buttons -->
+        <div id="hire-controls" class="mt-8 flex items-center justify-between gap-4">
+          <button type="button" id="btn-back" class="inline-flex items-center gap-1.5 rounded-full liquid-glass px-5 py-3 text-sm font-medium text-white/80 hover:text-white transition-colors invisible">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M5 12l6-6M5 12l6 6"/></svg>
+            Back
+          </button>
+          <button type="button" id="btn-next" class="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-b from-gold-bright to-gold px-6 py-3 text-sm font-semibold text-navy hover:-translate-y-0.5 transition-transform">
+            Continue
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </form>
+    </main>
+  </div>
+</Layout>
+
+<script>
+  const form = document.getElementById("hire-form") as HTMLFormElement;
+  const steps = Array.from(document.querySelectorAll<HTMLElement>(".hire-step"));
+  const total = steps.length;
+  let current = 1;
+
+  const fill = document.getElementById("progress-fill")!;
+  const label = document.getElementById("progress-label")!;
+  const btnBack = document.getElementById("btn-back")!;
+  const btnNext = document.getElementById("btn-next")! as HTMLButtonElement;
+  const controls = document.getElementById("hire-controls")!;
+  const success = document.getElementById("hire-success")!;
+
+  function show(step: number) {
+    steps.forEach((s) => s.classList.toggle("hidden", Number(s.dataset.step) !== step));
+    fill.style.width = `${(step / total) * 100}%`;
+    label.textContent = `Step ${step} of ${total}`;
+    btnBack.classList.toggle("invisible", step === 1);
+    btnNext.innerHTML = step === total
+      ? 'Submit request <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>'
+      : 'Continue <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    const active = steps.find((s) => Number(s.dataset.step) === step);
+    if (active) active.animate([{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "translateY(0)" }], { duration: 400, easing: "cubic-bezier(0.22,1,0.36,1)" });
+  }
+
+  function validate(step: number): boolean {
+    document.querySelectorAll<HTMLElement>("[data-error]").forEach((e) => e.classList.add("hidden"));
+    if (step === 2 && !form.querySelector('input[name="roles"]:checked')) {
+      document.querySelector('[data-error="roles"]')!.classList.remove("hidden"); return false;
+    }
+    if (step === 3) {
+      const workers = form.querySelector<HTMLInputElement>('input[name="workers"]')!;
+      if (!workers.value || Number(workers.value) < 1) { workers.focus(); return false; }
+      if (!form.querySelector('input[name="shifts"]:checked')) {
+        document.querySelector('[data-error="shifts"]')!.classList.remove("hidden"); return false;
+      }
+    }
+    if (step === 5) {
+      for (const n of ["name", "company", "email"]) {
+        const el = form.querySelector<HTMLInputElement>(`input[name="${n}"]`)!;
+        if (!el.value || (n === "email" && !el.checkValidity())) { el.focus(); return false; }
+      }
+    }
+    return true;
+  }
+
+  function buildSummary() {
+    const get = (n: string) => (form.querySelector<HTMLInputElement>(`input[name="${n}"]:checked`)?.value) || "—";
+    const list = (n: string) => Array.from(form.querySelectorAll<HTMLInputElement>(`input[name="${n}"]:checked`)).map((e) => e.value).join(", ") || "—";
+    const workers = (form.querySelector<HTMLInputElement>('input[name="workers"]')?.value) || "—";
+    const start = (form.querySelector<HTMLInputElement>('input[name="start"]')?.value) || "Flexible";
+    document.getElementById("summary")!.innerHTML =
+      `<strong class="text-white">Operation:</strong> ${get("operation")}<br>` +
+      `<strong class="text-white">Roles:</strong> ${list("roles")}<br>` +
+      `<strong class="text-white">Workers:</strong> ${workers} · <strong class="text-white">Shifts:</strong> ${list("shifts")} · <strong class="text-white">Start:</strong> ${start}<br>` +
+      `<strong class="text-white">Engagement:</strong> ${get("engagement")}`;
+  }
+
+  btnNext.addEventListener("click", () => {
+    if (!validate(current)) return;
+    if (current < total) {
+      current++;
+      if (current === total) buildSummary();
+      show(current);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      // submit (demo)
+      steps.forEach((s) => s.classList.add("hidden"));
+      controls.classList.add("hidden");
+      document.getElementById("progress-fill")!.style.width = "100%";
+      label.textContent = "Done";
+      success.classList.remove("hidden");
+    }
+  });
+
+  btnBack.addEventListener("click", () => {
+    if (current > 1) { current--; show(current); }
+  });
+
+  show(1);
+</script>

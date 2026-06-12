@@ -21,7 +21,20 @@
       "Bash(mkdir -p public/img public/logo .tmp_thumbs)",
       "Bash(break)",
       "Bash('/c/Program Files/GitHub CLI/gh.exe' auth status)",
-      "Bash(cd \"/c/Users/f_cv1/Documents/Paguinas Wed/CLAUDE - Golden Pack\" && rm -rf .tmp_thumbs && echo \"cleaned\")"
+      "Bash(cd \"/c/Users/f_cv1/Documents/Paguinas Wed/CLAUDE - Golden Pack\" && rm -rf .tmp_thumbs && echo \"cleaned\")",
+      "Bash([ -d \"$SK\" ])",
+      "Read(//c/Users/f_cv1/.claude/**)",
+      "Read(//tmp/**)",
+      "Bash(rm -rf /tmp/uiux-skill-tmp && echo \"temp cleaned\")",
+      "Bash(file scripts *)",
+      "Bash(head -c 300 scripts)",
+      "Bash(head -c 300 data)",
+      "Bash(python scripts/search.py \"warehouse staffing recruitment workforce service premium corporate trust professional\" --design-system -f markdown)",
+      "Bash(python scripts/search.py \"geometric humanist sans premium corporate degular-like\" --domain typography -n 4)",
+      "Bash(python scripts/search.py \"comparison trend metrics KPI service\" --domain chart -n 5)",
+      "Bash(python scripts/search.py \"animation scroll performance islands\" --stack astro)",
+      "Bash(python \"/c/Users/f_cv1/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"warehouse staffing recruitment workforce premium corporate trust authority\" --design-system --persist -p \"GoldenPath Solutions\")",
+      "Bash(xargs -0 sed -i -e 's/bg-black\\\\b/bg-navy-900/g' -e 's/from-black\\\\//from-navy-900\\\\//g' -e 's/via-black\\\\//via-navy-900\\\\//g' -e 's/to-black\\\\b/to-navy-900/g' -e 's/from-black\\\\b/from-navy-900/g' -e 's/via-black\\\\b/via-navy-900/g' -e 's/from-\\\\[#0f172a\\\\]/from-navy/g' -e 's/via-\\\\[#0f172a\\\\]/via-navy/g')"
     ]
   }
 }

@@ -1,0 +1,52 @@
+---
+const faqs = [
+  { q: "How fast can you staff a shift?", a: "For most roles we present vetted, work-ready candidates within 48 hours, and we can ramp large peak crews in one to two weeks." },
+  { q: "What screening do workers go through?", a: "Every placement includes interviewing, background checks, identity and eligibility verification, and role-specific safety onboarding before they reach your floor." },
+  { q: "Which engagement types do you offer?", a: "Contract, contract-to-hire, full-time, part-time, permanent, and remote support roles — so you can flex labor to demand without overcommitting." },
+  { q: "Do you cover multiple sites and all shifts?", a: "Yes. We staff 1st, 2nd, and 3rd shift across single or multi-site operations, with one accountable point of contact for everything." },
+  { q: "How does pricing work?", a: "Transparent bill rates per role with no hidden fees. Most clients reduce total labor spend by consolidating staffing with one reliable partner." },
+];
+---
+
+<section id="faq" class="relative bg-navy-900 py-24 sm:py-32 overflow-hidden">
+  <div class="relative z-10 mx-auto max-w-4xl px-5 sm:px-8">
+    <div class="text-center max-w-2xl mx-auto">
+      <p data-reveal class="text-sm font-body text-white/70 mb-5">// Questions</p>
+      <h2 data-reveal style="--reveal-delay:80ms" class="font-heading text-white text-5xl md:text-6xl tracking-[-2px] leading-[0.95]">
+        Frequently <span class="text-gold-gradient">asked</span>
+      </h2>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-3">
+      {faqs.map((f, i) => (
+        <div data-reveal style={`--reveal-delay:${i * 70}ms`} class="faq-item liquid-glass rounded-[1.25rem] overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 px-6 py-5 text-left" aria-expanded="false">
+            <span class="font-heading text-white text-lg md:text-xl tracking-[-0.3px]">{f.q}</span>
+            <span class="faq-icon grid h-8 w-8 shrink-0 place-items-center rounded-full liquid-glass text-gold transition-transform duration-400">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-panel grid grid-rows-[0fr] transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)]">
+            <div class="overflow-hidden">
+              <p class="px-6 pb-6 text-[15px] text-white/75 font-body font-light leading-relaxed">{f.a}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".faq-item").forEach((item) => {
+    const trigger = item.querySelector<HTMLButtonElement>(".faq-trigger")!;
+    const panel = item.querySelector<HTMLElement>(".faq-panel")!;
+    const icon = item.querySelector<HTMLElement>(".faq-icon")!;
+    trigger.addEventListener("click", () => {
+      const open = trigger.getAttribute("aria-expanded") === "true";
+      trigger.setAttribute("aria-expanded", String(!open));
+      panel.style.gridTemplateRows = open ? "0fr" : "1fr";
+      icon.style.transform = open ? "rotate(0deg)" : "rotate(135deg)";
+    });
+  });
+</script>

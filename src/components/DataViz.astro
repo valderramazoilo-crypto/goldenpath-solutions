@@ -1,0 +1,194 @@
+---
+const kpis = [
+  { label: "Fill rate", value: "98.6", suffix: "%" },
+  { label: "Avg. time to fill", value: "48", suffix: "h" },
+  { label: "90-day retention", value: "92", suffix: "%" },
+  { label: "Active workforce", value: "12", suffix: "K+" },
+];
+---
+
+<section id="performance" class="relative bg-navy-900 py-24 sm:py-32 overflow-hidden">
+  <div class="glow left-[-10rem] bottom-0 h-96 w-96 bg-gold/10"></div>
+  <div class="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 md:px-16 lg:px-20">
+    <div class="max-w-2xl">
+      <p data-reveal class="text-sm font-body text-white/70 mb-5">// By the numbers</p>
+      <h2 data-reveal style="--reveal-delay:80ms" class="font-heading text-white text-5xl md:text-6xl lg:text-[4.5rem] leading-[0.92] tracking-[-2px]">
+        Performance you can <span class="text-gold-gradient">measure</span>
+      </h2>
+      <p data-reveal style="--reveal-delay:140ms" class="mt-5 text-base text-white/75 font-body font-light max-w-xl">
+        Real operational metrics from the floors we staff — updated every quarter.
+      </p>
+    </div>
+
+    <!-- KPI strip -->
+    <div data-reveal class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {kpis.map((k, i) => (
+        <div class="liquid-glass rounded-[1.25rem] p-6" style={`--reveal-delay:${i * 80}ms`}>
+          <p class="font-heading text-4xl tracking-[-1px] leading-none">
+            <span data-count={k.value} data-suffix={k.suffix} class="text-gold-gradient">0{k.suffix}</span>
+          </p>
+          <p class="mt-3 text-sm text-white/70 font-body font-light">{k.label}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Charts bento -->
+    <div class="mt-6 grid gap-6 lg:grid-cols-3">
+      <div data-reveal class="liquid-glass-strong rounded-[1.5rem] p-7 lg:col-span-2">
+        <div class="flex items-center justify-between">
+          <h3 class="font-heading text-white text-2xl tracking-[-0.5px]">Operational performance</h3>
+          <span class="text-xs text-white/55 font-body">Last 8 months</span>
+        </div>
+        <p class="sr-only">Line chart: average time-to-fill fell from 96 to 41 hours while fill rate rose from 89% to 99% over eight months.</p>
+        <div class="mt-5 h-[300px]"><canvas id="chart-trend" aria-label="Operational performance trend chart" role="img"></canvas></div>
+      </div>
+
+      <div data-reveal style="--reveal-delay:120ms" class="liquid-glass-strong rounded-[1.5rem] p-7">
+        <h3 class="font-heading text-white text-2xl tracking-[-0.5px]">Workforce by industry</h3>
+        <p class="sr-only">Doughnut chart: E-commerce 34%, 3PL & distribution 26%, Manufacturing 22%, Cold storage 11%, Retail 7%.</p>
+        <div class="mt-5 h-[300px]"><canvas id="chart-mix" aria-label="Workforce by industry chart" role="img"></canvas></div>
+      </div>
+
+      <div data-reveal class="liquid-glass-strong rounded-[1.5rem] p-7 lg:col-span-3">
+        <div class="flex items-center justify-between">
+          <h3 class="font-heading text-white text-2xl tracking-[-0.5px]">Monthly placements</h3>
+          <span class="text-xs text-white/55 font-body">Workers placed per month</span>
+        </div>
+        <p class="sr-only">Bar chart of workers placed each month, climbing from about 640 to 1,420.</p>
+        <div class="mt-5 h-[260px]"><canvas id="chart-placements" aria-label="Monthly placements chart" role="img"></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import Chart from "chart.js/auto";
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const GOLD = "#c8a96b";
+  const GOLD_BRIGHT = "#e7cf9a";
+  const ROYAL = "#5871f0";
+  const ROYAL_DEEP = "#2c43d6";
+  const TEXT = "#aab4cf";
+  const GRID = "rgba(255,255,255,0.06)";
+
+  Chart.defaults.color = TEXT;
+  Chart.defaults.font.family = "Degular, 'Hanken Grotesk', sans-serif";
+  Chart.defaults.font.size = 12;
+
+  const months = ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"];
+
+  function gradient(ctx: CanvasRenderingContext2D, from: string, to: string) {
+    const g = ctx.createLinearGradient(0, 0, 0, 300);
+    g.addColorStop(0, from);
+    g.addColorStop(1, to);
+    return g;
+  }
+
+  let built = false;
+  function buildCharts() {
+    if (built) return;
+    built = true;
+    const anim = reduceMotion ? false : ({ duration: 900, easing: "easeOutQuart" } as const);
+
+    // ---- Trend: time-to-fill (bars-as-line) + fill rate ----
+    const trendEl = document.getElementById("chart-trend") as HTMLCanvasElement | null;
+    if (trendEl) {
+      const ctx = trendEl.getContext("2d")!;
+      new Chart(trendEl, {
+        type: "line",
+        data: {
+          labels: months,
+          datasets: [
+            {
+              label: "Time to fill (hrs)",
+              data: [96, 88, 79, 70, 63, 55, 47, 41],
+              borderColor: GOLD_BRIGHT,
+              backgroundColor: gradient(ctx, "rgba(200,169,107,0.28)", "rgba(200,169,107,0)"),
+              borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0, pointHoverRadius: 5,
+              pointBackgroundColor: GOLD_BRIGHT, yAxisID: "y",
+            },
+            {
+              label: "Fill rate (%)",
+              data: [89, 91, 92, 94, 95, 97, 98, 99],
+              borderColor: ROYAL, backgroundColor: "transparent",
+              borderWidth: 2.5, borderDash: [5, 4], fill: false, tension: 0.4,
+              pointRadius: 0, pointHoverRadius: 5, pointBackgroundColor: ROYAL, yAxisID: "y1",
+            },
+          ],
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, animation: anim,
+          interaction: { mode: "index", intersect: false },
+          plugins: {
+            legend: { labels: { usePointStyle: true, boxWidth: 8, padding: 16 } },
+            tooltip: { backgroundColor: "rgba(12,18,34,0.95)", borderColor: "rgba(200,169,107,0.3)", borderWidth: 1, padding: 12, cornerRadius: 10 },
+          },
+          scales: {
+            x: { grid: { color: GRID }, border: { display: false } },
+            y: { position: "left", grid: { color: GRID }, border: { display: false }, title: { display: true, text: "Hrs" } },
+            y1: { position: "right", min: 80, max: 100, grid: { drawOnChartArea: false }, border: { display: false }, title: { display: true, text: "%" } },
+          },
+        },
+      });
+    }
+
+    // ---- Mix: doughnut ----
+    const mixEl = document.getElementById("chart-mix") as HTMLCanvasElement | null;
+    if (mixEl) {
+      new Chart(mixEl, {
+        type: "doughnut",
+        data: {
+          labels: ["E-commerce", "3PL & Distribution", "Manufacturing", "Cold storage", "Retail"],
+          datasets: [{
+            data: [34, 26, 22, 11, 7],
+            backgroundColor: [GOLD_BRIGHT, GOLD, "#a87900", ROYAL, ROYAL_DEEP],
+            borderColor: "#0c1222", borderWidth: 3, hoverOffset: 8,
+          }],
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, animation: anim, cutout: "62%",
+          plugins: {
+            legend: { position: "bottom", labels: { usePointStyle: true, boxWidth: 8, padding: 12, font: { size: 11 } } },
+            tooltip: { backgroundColor: "rgba(12,18,34,0.95)", padding: 12, cornerRadius: 10, callbacks: { label: (c: any) => ` ${c.label}: ${c.parsed}%` } },
+          },
+        },
+      });
+    }
+
+    // ---- Placements: bar ----
+    const plEl = document.getElementById("chart-placements") as HTMLCanvasElement | null;
+    if (plEl) {
+      const ctx = plEl.getContext("2d")!;
+      new Chart(plEl, {
+        type: "bar",
+        data: {
+          labels: months,
+          datasets: [{
+            label: "Workers placed",
+            data: [640, 720, 810, 880, 1010, 1180, 1310, 1420],
+            backgroundColor: gradient(ctx, GOLD_BRIGHT, "rgba(168,121,0,0.35)"),
+            borderRadius: 8, borderSkipped: false, maxBarThickness: 46,
+          }],
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, animation: anim,
+          plugins: {
+            legend: { display: false },
+            tooltip: { backgroundColor: "rgba(12,18,34,0.95)", padding: 12, cornerRadius: 10 },
+          },
+          scales: {
+            x: { grid: { display: false }, border: { display: false } },
+            y: { grid: { color: GRID }, border: { display: false }, ticks: { stepSize: 400 } },
+          },
+        },
+      });
+    }
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { buildCharts(); io.disconnect(); break; }
+  }, { threshold: 0.15 });
+  const section = document.getElementById("performance");
+  if (section) io.observe(section);
+</script>

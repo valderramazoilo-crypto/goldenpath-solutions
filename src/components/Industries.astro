@@ -1,0 +1,149 @@
+---
+const industries = [
+  {
+    id: "ecommerce",
+    label: "E-commerce Fulfillment",
+    title: "Peak-season fulfillment, fully staffed",
+    body: "Pickers, packers, and sorters who keep order volume flowing through Q4 and flash-sale surges — onboarded fast and ready for the floor.",
+    img: "/img/hero-aisle.webp",
+    stats: [
+      { k: "Pickers & packers", v: "Same-week" },
+      { k: "Peak ramp", v: "300+ crew" },
+      { k: "Accuracy", v: "99.4%" },
+    ],
+  },
+  {
+    id: "manufacturing",
+    label: "Manufacturing & Assembly",
+    title: "Reliable line crews, every shift",
+    body: "Assembly, machine operation, and material handling staff trained on safety and quality — covering 1st, 2nd, and 3rd shift without gaps.",
+    img: "/img/svc-staffing.webp",
+    stats: [
+      { k: "Shift coverage", v: "24/7" },
+      { k: "Safety record", v: "OSHA-ready" },
+      { k: "Retention", v: "92%" },
+    ],
+  },
+  {
+    id: "cold",
+    label: "Cold Storage & Food",
+    title: "Crews built for the cold chain",
+    body: "Freezer-rated, food-safety-certified workers who hold the line in -20°F environments — dependable people for a demanding floor.",
+    img: "/img/svc-facility.webp",
+    stats: [
+      { k: "Freezer-rated", v: "Certified" },
+      { k: "Food safety", v: "HACCP" },
+      { k: "Show-up rate", v: "97%" },
+    ],
+  },
+  {
+    id: "3pl",
+    label: "3PL & Distribution",
+    title: "Flexible labor that scales with demand",
+    body: "Cross-dock, loading, and inventory crews you can scale up or down by the week — perfect for third-party logistics and DC operations.",
+    img: "/img/band-team.webp",
+    stats: [
+      { k: "Scale window", v: "Weekly" },
+      { k: "Cross-dock", v: "Trained" },
+      { k: "Fill time", v: "48 hrs" },
+    ],
+  },
+  {
+    id: "retail",
+    label: "Retail Distribution",
+    title: "Keep shelves stocked and trucks moving",
+    body: "Replenishment, returns, and reverse-logistics staff who keep retail DCs on schedule through every season and store reset.",
+    img: "/img/employers.webp",
+    stats: [
+      { k: "Returns crew", v: "Ready" },
+      { k: "Seasonal ramp", v: "Fast" },
+      { k: "On-time", v: "98%" },
+    ],
+  },
+];
+---
+
+<section id="industries" class="relative bg-navy-900 py-24 sm:py-32 overflow-hidden">
+  <div class="glow right-[-12rem] top-20 h-96 w-96 bg-royal/15"></div>
+  <div class="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 md:px-16 lg:px-20">
+    <div class="max-w-2xl">
+      <p data-reveal class="text-sm font-body text-white/70 mb-5">// Solutions by industry</p>
+      <h2 data-reveal style="--reveal-delay:80ms" class="font-heading text-white text-5xl md:text-6xl lg:text-[4.5rem] leading-[0.92] tracking-[-2px]">
+        Staffing tuned to <span class="text-gold-gradient">your floor</span>
+      </h2>
+      <p data-reveal style="--reveal-delay:140ms" class="mt-5 text-base text-white/75 font-body font-light max-w-xl">
+        Every warehouse runs differently. Pick your operation to see how GoldenPath builds the right crew for it.
+      </p>
+    </div>
+
+    <!-- Tabs -->
+    <div data-reveal class="mt-12 flex flex-wrap gap-2.5" role="tablist" aria-label="Industries">
+      {industries.map((ind, i) => (
+        <button
+          class="ind-tab rounded-full px-5 py-2.5 text-sm font-medium font-body transition-all duration-300 data-[active=true]:bg-gradient-to-b data-[active=true]:from-gold-bright data-[active=true]:to-gold data-[active=true]:text-navy data-[active=false]:liquid-glass data-[active=false]:text-white/80 data-[active=false]:hover:text-white"
+          role="tab"
+          data-ind={ind.id}
+          data-active={i === 0 ? "true" : "false"}
+          aria-selected={i === 0 ? "true" : "false"}
+        >
+          {ind.label}
+        </button>
+      ))}
+    </div>
+
+    <!-- Panels -->
+    <div class="mt-8 relative">
+      {industries.map((ind, i) => (
+        <div class="ind-panel liquid-glass-strong rounded-[1.75rem] overflow-hidden" data-ind={ind.id} hidden={i !== 0}>
+          <div class="grid lg:grid-cols-2">
+            <div class="relative min-h-[260px] overflow-hidden">
+              <img src={ind.img} alt={ind.label} width="1100" height="900" class="absolute inset-0 h-full w-full object-cover" />
+              <div class="absolute inset-0 bg-gradient-to-r from-navy-900/30 to-navy-900/80 lg:bg-gradient-to-l"></div>
+            </div>
+            <div class="p-8 sm:p-12">
+              <h3 class="font-heading text-white text-3xl md:text-4xl tracking-[-1px] leading-tight">{ind.title}</h3>
+              <p class="mt-4 text-base text-white/80 font-body font-light leading-relaxed">{ind.body}</p>
+              <div class="mt-8 grid grid-cols-3 gap-4">
+                {ind.stats.map((s) => (
+                  <div class="liquid-glass rounded-[1rem] p-4">
+                    <p class="font-heading text-xl text-gold-gradient leading-none">{s.v}</p>
+                    <p class="mt-1.5 text-[11px] text-white/65 font-body">{s.k}</p>
+                  </div>
+                ))}
+              </div>
+              <a href="/hire" class="mt-8 inline-flex items-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-navy hover:bg-white/90 transition-colors">
+                Staff this operation
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>(".ind-tab");
+  const panels = document.querySelectorAll<HTMLElement>(".ind-panel");
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const id = tab.dataset.ind;
+      tabs.forEach((t) => {
+        const active = t === tab;
+        t.dataset.active = String(active);
+        t.setAttribute("aria-selected", String(active));
+      });
+      panels.forEach((p) => {
+        const show = p.dataset.ind === id;
+        p.hidden = !show;
+        if (show) {
+          p.animate(
+            [{ opacity: 0, transform: "translateY(12px)" }, { opacity: 1, transform: "translateY(0)" }],
+            { duration: 450, easing: "cubic-bezier(0.22,1,0.36,1)" }
+          );
+        }
+      });
+    });
+  });
+</script>
