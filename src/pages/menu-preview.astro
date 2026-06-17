@@ -1,0 +1,74 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const items = [
+  { label: "Account Settings", icon: `<path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/>`, accent: false, toggle: false },
+  { label: "Dark mode", icon: `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>`, accent: false, toggle: true },
+  { label: "View Analytics", icon: `<path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/>`, accent: false, toggle: false },
+  { label: "Special features", icon: `<path d="M12 2l2.2 5.8L20 10l-5.8 2.2L12 18l-2.2-5.8L4 10l5.8-2.2L12 2Z"/>`, accent: true, toggle: false },
+];
+---
+
+<Layout title="Account menu — preview">
+  <main class="relative min-h-dvh overflow-hidden bg-navy-900 grid place-items-center px-5 py-16">
+    <!-- Brand abstract backdrop -->
+    <img src="/img/hero-bg.webp" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover opacity-25" />
+    <div class="absolute inset-0 bg-navy-900/55"></div>
+    <div class="glow left-[12%] top-[14%] h-72 w-72 bg-royal/40"></div>
+    <div class="glow right-[10%] top-[40%] h-80 w-80 bg-royal-400/30"></div>
+    <div class="glow left-[30%] bottom-[8%] h-72 w-72 bg-gold/25"></div>
+    <div class="absolute inset-0 bg-grid opacity-40 [mask-image:radial-gradient(60%_55%_at_50%_45%,#000,transparent)]"></div>
+
+    <!-- Glass account menu -->
+    <div class="relative z-10 w-full max-w-[360px]">
+      <div class="liquid-glass-strong rounded-[1.6rem] p-2.5">
+        <!-- Profile header -->
+        <div class="flex items-center gap-3.5 px-3.5 pt-3 pb-4">
+          <span class="relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full ring-1 ring-[var(--color-line)]">
+            <img src="/img/workers.webp" alt="Elizabeth" class="h-full w-full object-cover" />
+          </span>
+          <span class="min-w-0">
+            <span class="block font-heading text-white text-lg leading-tight tracking-[-0.3px]">Elizabeth</span>
+            <span class="block text-sm text-white/55 font-body truncate">elizabeth@goldenpath.com</span>
+          </span>
+        </div>
+
+        <div class="h-px bg-gradient-to-r from-transparent via-[var(--color-line)] to-transparent"></div>
+
+        <!-- Items -->
+        <nav class="py-2">
+          {items.map((it) => (
+            <button class="menu-row group flex w-full items-center gap-3.5 rounded-[0.9rem] px-3.5 py-2.5 text-left transition-colors">
+              <span class={`grid h-5 w-5 place-items-center ${it.accent ? "text-gold" : "text-white/75 group-hover:text-white"}`}>
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={it.icon} />
+              </span>
+              <span class={`flex-1 text-[15px] font-body ${it.accent ? "text-gold-gradient font-medium" : "text-white/90 group-hover:text-white"}`}>{it.label}</span>
+              {it.toggle && (
+                <span class="relative h-5 w-9 shrink-0 rounded-full bg-gradient-to-r from-amber to-gold">
+                  <span class="absolute right-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow-sm"></span>
+                </span>
+              )}
+            </button>
+          ))}
+        </nav>
+
+        <div class="mx-3.5 h-px bg-gradient-to-r from-transparent via-[var(--color-line)] to-transparent"></div>
+
+        <!-- Logout -->
+        <nav class="py-2">
+          <button class="menu-row group flex w-full items-center gap-3.5 rounded-[0.9rem] px-3.5 py-2.5 text-left transition-colors">
+            <span class="grid h-5 w-5 place-items-center text-white/75 group-hover:text-gold">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+            </span>
+            <span class="flex-1 text-[15px] font-body text-white/90 group-hover:text-white">Logout</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .menu-row { cursor: pointer; }
+  .menu-row:hover { background: rgba(200, 169, 107, 0.10); }
+</style>

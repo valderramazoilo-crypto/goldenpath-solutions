@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 4321
+    },
+    {
+      "name": "aureca",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "serve", "-l", "4322", "C:\\Users\\f_cv1\\DOCUME~1\\PAGUIN~1\\Aureca"],
+      "port": 4322
     }
   ]
 }
